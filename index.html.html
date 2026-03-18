@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VibesCoders Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: #8A6E2E;
+    --ink: #0A0A0C;
+    --ink2: #111116;
+    --ink3: #1A1A22;
+    --silver: #B8BAC8;
+    --silver-dim: #5A5C6A;
+    --white: #F0EFE8;
+  }
+
+  html, body {
+    min-height: 100%;
+    background: var(--ink);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* BACKGROUND GRID */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* CORNER ORNAMENTS */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px; height: 240px;
+    background: radial-gradient(ellipse at top left, rgba(201,168,76,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .corner-br {
+    position: fixed;
+    bottom: 0; right: 0;
+    width: 300px; height: 300px;
+    background: radial-gradient(ellipse at bottom right, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* MAIN WRAPPER */
+  .wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    padding: 60px 24px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* TOP RULE */
+  .top-rule {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--gold-dim));
+    margin-bottom: 32px;
+  }
+
+  /* AVATAR */
+  .avatar-ring {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 28px;
+  }
+
+  .avatar-ring::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--gold) 0deg,
+      var(--gold-light) 90deg,
+      var(--gold-dim) 180deg,
+      var(--gold) 270deg,
+      var(--gold-light) 360deg
+    );
+    animation: spin 8s linear infinite;
+  }
+
+  .avatar-ring::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .avatar-img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* BADGE */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 0.5px solid var(--gold-dim);
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    opacity: 0.85;
+  }
+
+  .badge-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* HEADING */
+  .name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 7vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .name span {
+    color: var(--gold);
+  }
+
+  /* BIO */
+  .bio {
+    font-size: 13px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--silver);
+    text-align: center;
+    line-height: 1.7;
+    max-width: 300px;
+    margin-bottom: 44px;
+    opacity: 0.8;
+  }
+
+  /* DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 36px;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 0.5px;
+    background: linear-gradient(to right, transparent, var(--gold-dim));
+  }
+
+  .divider-line:last-child {
+    background: linear-gradient(to left, transparent, var(--gold-dim));
+  }
+
+  .divider-diamond {
+    width: 6px;
+    height: 6px;
+    border: 0.5px solid var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* CTA BUTTON */
+  .cta-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .cta-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--silver-dim);
+    font-weight: 400;
+  }
+
+  .cta-btn {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.04) 50%, rgba(201,168,76,0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .cta-btn:hover::before { opacity: 1; }
+
+  .cta-btn-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 28px;
+    border: 0.5px solid var(--gold-dim);
+    border-radius: 2px;
+    background: var(--ink2);
+    transition: border-color 0.3s, transform 0.15s;
+  }
+
+  .cta-btn:hover .cta-btn-inner {
+    border-color: var(--gold);
+    transform: translateY(-1px);
+  }
+
+  .cta-btn:active .cta-btn-inner {
+    transform: translateY(0px);
+  }
+
+  .cta-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .cta-icon {
+    width: 36px;
+    height: 36px;
+    border: 0.5px solid var(--gold-dim);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.3s;
+  }
+
+  .cta-btn:hover .cta-icon {
+    border-color: var(--gold);
+  }
+
+  .cta-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .cta-text-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .cta-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+    opacity: 0.8;
+  }
+
+  .cta-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.01em;
+  }
+
+  .cta-arrow {
+    color: var(--gold);
+    font-size: 18px;
+    transition: transform 0.3s;
+    line-height: 1;
+  }
+
+  .cta-btn:hover .cta-arrow {
+    transform: translate(3px, -3px);
+  }
+
+  /* SHIMMER LINE BELOW BTN */
+  .shimmer-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent 0%, var(--gold) 50%, transparent 100%);
+    opacity: 0;
+    animation: shimmer 4s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% { opacity: 0; background-position: -100% 0; }
+    50% { opacity: 0.6; }
+    100% { opacity: 0; background-position: 200% 0; }
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .bottom-rule {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold-dim), transparent);
+    margin-bottom: 4px;
+  }
+
+  .footer-text {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--silver-dim);
+    opacity: 0.5;
+  }
+
+  /* SCAN LINE EFFECT */
+  @keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+  }
+
+  .scanline {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.06), transparent);
+    pointer-events: none;
+    z-index: 10;
+    animation: scan 8s linear infinite;
+  }
+
+  /* ENTER ANIMATION */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .avatar-ring  { animation: fadeUp 0.6s ease both; }
+  .badge        { animation: fadeUp 0.6s 0.1s ease both; }
+  .name         { animation: fadeUp 0.6s 0.2s ease both; }
+  .bio          { animation: fadeUp 0.6s 0.3s ease both; }
+  .divider      { animation: fadeUp 0.6s 0.4s ease both; }
+  .cta-wrap     { animation: fadeUp 0.6s 0.5s ease both; }
+  .footer       { animation: fadeUp 0.6s 0.6s ease both; }
+</style>
+</head>
+<body>
+<div class="corner-br"></div>
+<div class="scanline"></div>
+
+<div class="wrap">
+
+  <div class="top-rule"></div>
+
+  <div class="avatar-ring">
+    <img
+      class="avatar-img"
+      src="https://imgur.com/ZBExqIu.jpg"
+      alt="VibesCoders Club"
+    />
+  </div>
+
+  <div class="badge">
+    <span class="badge-dot"></span>
+    Comunidade exclusiva
+  </div>
+
+  <h1 class="name">Vibes<span>Coders</span><br/>Club</h1>
+
+  <p class="bio">Comunidade para vibecoders milionários</p>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-diamond"></div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="cta-wrap">
+    <span class="cta-label">Acesso imediato</span>
+
+    <a
+      class="cta-btn"
+      href="https://pay.hoopay.com.br/?productId[]=20fc1937-19ea-4360-88a2-6a9f38bbc325&qty[]=1"
+      target="_blank"
+      rel="noopener"
+    >
+      <div class="cta-btn-inner">
+        <div class="cta-left">
+          <div class="cta-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="cta-text-wrap">
+            <span class="cta-eyebrow">Entrar agora</span>
+            <span class="cta-title">Quero fazer parte</span>
+          </div>
+        </div>
+        <span class="cta-arrow">↗</span>
+      </div>
+    </a>
+
+    <div class="shimmer-line"></div>
+  </div>
+
+  <div class="footer">
+    <div class="bottom-rule"></div>
+    <span class="footer-text">VibesCoders Club · 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
